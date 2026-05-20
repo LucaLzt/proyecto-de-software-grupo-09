@@ -1,20 +1,17 @@
 package com.unla.grupo9.steam.utils;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
 import com.unla.grupo9.steam.entities.User;
+import com.unla.grupo9.steam.entities.UserRole;
+import com.unla.grupo9.steam.repositories.IUserRepository;
+import com.unla.grupo9.steam.repositories.IUserRoleRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.unla.grupo9.steam.entities.UserRole;
-import com.unla.grupo9.steam.repositories.IUserRepository;
-import com.unla.grupo9.steam.repositories.IUserRoleRepository;
-import com.unla.grupo9.steam.utils.Roles;
-
-import lombok.AllArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
@@ -31,20 +28,6 @@ public class Runners implements CommandLineRunner {
         // Create recommended users if they don't exist
         createUserIfNotExists("admin@test.com", "admin123", Roles.ROLE_ADMIN);
         createUserIfNotExists("user@test.com", "user123", Roles.ROLE_AUDITOR);
-
-        // Backwards compatibility: keep a simple 'admin' user if no users exist at all
-        if (userRepository.count() == 0) {
-            List<UserRole> allRoles = rolRepository.findAll();
-            User fallback = new User(
-                    "admin",
-                    passwordEncoder.encode("1111"),
-                    true,
-                    LocalDateTime.now(),
-                    LocalDateTime.now(),
-                    allRoles
-            );
-            userRepository.save(fallback);
-        }
     }
 
     private void ensureRolesExist() {

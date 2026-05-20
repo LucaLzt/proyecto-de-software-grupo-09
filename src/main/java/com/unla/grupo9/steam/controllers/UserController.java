@@ -5,12 +5,12 @@ import com.unla.grupo9.steam.services.implementation.UserRoleService;
 import com.unla.grupo9.steam.services.implementation.UserService;
 import com.unla.grupo9.steam.utils.Roles;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -28,14 +28,46 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public RedirectView guardar(@ModelAttribute("usuario") User user) {
-        user.setRoles(List.of(roleService.traerPorNombre(Roles.ROLE_AUDITOR).get()));
-        userService.saveOrUpdate(user);
-        return new RedirectView("/login");
+    public String guardar(@ModelAttribute("usuario") User user,
+                          BindingResult bindingResult,
+                          Model model) {
+        if (user.getUsername() == null || user.getUsername().isBlank()) {
+            bindingResult.rejectValue("username", "required", "El email es obligatorio");
+        } else if (user.getUsername().length() > 45) {
+            bindingResult.rejectValue("username", "length", "El email no puede superar 45 caracteres");
+
+            if (user.getPassword() == null || user.getPassword().isBlank()) {
+                bindingResult.rejectValue("password", "required", "La contrasena es obligatoria");
+            } else if (user.getPassword().length() < 4 || user.getPassword().length() > 72) {
+                bindingResult.rejectValue("password", "length", "La contrasena debe tener entre 4 y 72 caracteres");
+            }
+
+            if (bindingResult.hasErrors()) {
+                return "registro";
+            }
+
+            var auditorRole = roleService.traerPorNombre(Roles.ROLE_AUDITOR);
+            if (auditorRole.isEmpty()) {
+                model.addAttribute("registroError", "No se pudo asignar el rol de usuario. Intenta nuevamente.");
+                return "registro";
+            }
+
+            user.setRoles(List.of(auditorRole.get()));
+            try {
+                userService.saveOrUpdate(user);
+            } catch (DataIntegrityViolationException ex) {
+                bindingResult.rejectValue("username", "duplicate", "Ese email ya esta registrado");
+                return "registro";
+            }
+
+            return "redirect:/login";
+        }
+        return "login";
     }
 
     @GetMapping("/login")
-    public String login(Model model, @RequestParam(name = "error", required = false) String error,
+    public String login(Model model,
+                        @RequestParam(name = "error", required = false) String error,
                         @RequestParam(name = "logout", required = false) String logout) {
         model.addAttribute("error", error);
         model.addAttribute("logout", logout);
@@ -43,7 +75,7 @@ public class UserController {
     }
 
     @GetMapping("/logout")
-    public String logout(Model model) {
+    public String logout() {
         return "redirect:/login";
     }
 

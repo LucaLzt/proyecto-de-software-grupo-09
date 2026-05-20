@@ -8,36 +8,44 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           crossorigin="anonymous">
     <style>
-        :root{
+        :root {
             --steam-bg: #0b2838;
             --steam-accent: #66c0f4;
             --card-bg: #122f3d;
             --muted: #94a3b8;
         }
-        body{
+
+        body {
             background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
             color: white;
-            min-height:100vh;
+            min-height: 100vh;
         }
-        .navbar-steam{
-            background: rgba(5,20,28,0.9);
+
+        .navbar-steam {
+            background: rgba(5, 20, 28, 0.9);
         }
-        .brand-logo{
-            font-weight:700;
+
+        .brand-logo {
+            font-weight: 700;
             color: var(--steam-accent);
         }
-        .game-card{
+
+        .game-card {
             background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.03);
+            border: 1px solid rgba(255, 255, 255, 0.03);
             color: white;
         }
-        .footer{
+
+        .footer {
             margin-top: 40px;
             padding: 20px 0;
             text-align: center;
             color: var(--muted);
         }
-        .small-muted{ color: var(--muted); }
+
+        .small-muted {
+            color: var(--muted);
+        }
     </style>
 </head>
 <body>
@@ -60,12 +68,14 @@
             </ul>
 
             <form class="d-flex me-3" role="search" th:action="@{/home}" method="get">
-                <input class="form-control form-control-sm" type="search" placeholder="Buscar juegos..." aria-label="Search">
+                <input class="form-control form-control-sm" type="search" placeholder="Buscar juegos..."
+                       aria-label="Search">
             </form>
 
             <div class="d-flex">
                 <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="userMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="userMenu" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         Cuenta
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
@@ -88,7 +98,8 @@
         <div class="col-12 mb-4">
             <div class="p-4 rounded game-card">
                 <h1>Bienvenido a Steam Mock</h1>
-                <p class="small-muted">Explorá ofertas, tu biblioteca y la comunidad. Esto es una interfaz simple inspirada en Steam.</p>
+                <p class="small-muted">Explorá ofertas, tu biblioteca y la comunidad. Esto es una interfaz simple
+                    inspirada en Steam.</p>
             </div>
         </div>
     </div>
@@ -139,6 +150,7 @@
 
     <div class="footer">Grupo 9 — Interfaz de ejemplo</div>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
 </body>
 </html>

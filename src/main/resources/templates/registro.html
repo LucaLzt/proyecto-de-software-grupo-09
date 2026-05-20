@@ -4,25 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steam Mock - Registro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          crossorigin="anonymous">
     <style>
-        body{ background:#071825; color:#fff }
-        .reg-card{ background:#0f2b38; border:1px solid rgba(255,255,255,0.04); }
-        .steam-link{ color:#66c0f4; }
+        body {
+            background: #071825;
+            color: #fff
+        }
+
+        .reg-card {
+            background: #0f2b38;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .steam-link {
+            color: #66c0f4;
+        }
     </style>
 </head>
 <body>
 <div class="container d-flex justify-content-center align-items-center" style="min-height:80vh;">
     <div class="card reg-card p-4" style="width:100%; max-width:520px;">
         <h4 class="mb-3">Crear cuenta</h4>
+        <div th:if="${registroError}" class="alert alert-danger" th:text="${registroError}"></div>
         <form th:action="@{/save}" th:object="${usuario}" method="post">
             <div class="mb-3">
                 <label class="form-label small">Usuario (email)</label>
-                <input type="text" th:field="${usuario.username}" class="form-control form-control-sm" placeholder="admin@test.com">
+                <input type="email"
+                       th:field="*{username}"
+                       class="form-control form-control-sm"
+                       th:classappend="${#fields.hasErrors('username')} ? ' is-invalid' : ''"
+                       placeholder="admin@test.com">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
             </div>
             <div class="mb-3">
                 <label class="form-label small">Contraseña</label>
-                <input type="password" th:field="${usuario.password}" class="form-control form-control-sm" placeholder="contraseña">
+                <input type="password"
+                       th:field="*{password}"
+                       class="form-control form-control-sm"
+                       th:classappend="${#fields.hasErrors('password')} ? ' is-invalid' : ''"
+                       placeholder="contraseña">
+                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Registrarse</button>
@@ -32,6 +54,7 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
 </body>
 </html>
