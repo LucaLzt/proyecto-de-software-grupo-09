@@ -67,10 +67,11 @@
                 <li class="nav-item"><a class="nav-link text-white" href="#">Community</a></li>
             </ul>
 
-            <form class="d-flex me-3" role="search" th:action="@{/home}" method="get">
-                <input class="form-control form-control-sm" type="search" placeholder="Buscar juegos..."
-                       aria-label="Search">
-            </form>
+           <form class="d-flex me-3" role="search" th:action="@{/home}" method="get">
+    <input class="form-control form-control-sm" type="search" name="busqueda"
+           th:value="${busqueda}" placeholder="Buscar juegos..." aria-label="Search">
+    <button class="btn btn-sm btn-outline-light ms-2" type="submit">Buscar</button>
+</form>
 
             <div class="d-flex">
                 <div class="nav-item dropdown">
@@ -105,49 +106,28 @@
     </div>
 
     <!-- Sample grid of games -->
-    <div class="row g-3">
-        <div class="col-6 col-md-3">
-            <div class="card game-card p-2">
-                <div style="height:120px; background:#0f3a4a; border-radius:4px;">&nbsp;</div>
-                <div class="card-body p-2">
-                    <h6 class="card-title">Juego A</h6>
-                    <p class="small-muted mb-1">$9.99</p>
-                    <a href="#" class="btn btn-sm btn-outline-light">Ver</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card game-card p-2">
-                <div style="height:120px; background:#0f3a4a; border-radius:4px;">&nbsp;</div>
-                <div class="card-body p-2">
-                    <h6 class="card-title">Juego B</h6>
-                    <p class="small-muted mb-1">Gratis</p>
-                    <a href="#" class="btn btn-sm btn-outline-light">Ver</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card game-card p-2">
-                <div style="height:120px; background:#0f3a4a; border-radius:4px;">&nbsp;</div>
-                <div class="card-body p-2">
-                    <h6 class="card-title">Juego C</h6>
-                    <p class="small-muted mb-1">$14.99</p>
-                    <a href="#" class="btn btn-sm btn-outline-light">Ver</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card game-card p-2">
-                <div style="height:120px; background:#0f3a4a; border-radius:4px;">&nbsp;</div>
-                <div class="card-body p-2">
-                    <h6 class="card-title">Juego D</h6>
-                    <p class="small-muted mb-1">$4.99</p>
-                    <a href="#" class="btn btn-sm btn-outline-light">Ver</a>
-                </div>
+    <!-- Sample grid of games -->
+<div class="row g-3">
+    <div class="col-6 col-md-3" th:each="juego : ${juegos}">
+        <div class="card game-card p-2">
+            <img th:src="${juego.imagen}" th:alt="${juego.nombre}"
+                 style="height:120px; object-fit:cover; border-radius:4px;"
+                 onerror="this.style.background='#0f3a4a'; this.src=''"/>
+            <div class="card-body p-2">
+                <h6 class="card-title" th:text="${juego.nombre}">Nombre</h6>
+                <p class="small-muted mb-1"
+                   th:text="${juego.precio == 0.0 ? 'Gratis' : '$' + juego.precio}">Precio</p>
+                <a th:href="@{/catalogo/{id}(id=${juego.id})}"
+                   class="btn btn-sm btn-outline-light">Ver</a>
             </div>
         </div>
     </div>
 
+    <div class="col-12" th:if="${#lists.isEmpty(juegos)}">
+        <p class="text-center small-muted">No se encontraron juegos.</p>
+    </div>
+</div>
+      
     <div class="footer">Grupo 9 — Interfaz de ejemplo</div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

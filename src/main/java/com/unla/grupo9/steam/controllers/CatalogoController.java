@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/catalogo")
 @RequiredArgsConstructor
-public class HomeController {
+public class CatalogoController {
 
     private final IJuegoService juegoService;
 
-    @GetMapping("")
-    public String home(Model model, @RequestParam(name = "busqueda", required = false) String busqueda) {
+    @GetMapping
+    public String mostrarCatalogo(Model model, @RequestParam(name = "busqueda", required = false) String busqueda) {
         var juegos = (busqueda != null && !busqueda.isBlank())
                 ? juegoService.buscarPorNombre(busqueda)
                 : juegoService.obtenerTodos();
 
         model.addAttribute("juegos", juegos);
         model.addAttribute("busqueda", busqueda);
-        return "home";
+        return "catalogo";
     }
 }

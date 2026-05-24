@@ -28,41 +28,51 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String guardar(@ModelAttribute("usuario") User user,
-                          BindingResult bindingResult,
-                          Model model) {
+    public String guardar(@ModelAttribute("usuario") User user,BindingResult bindingResult,Model model) {
+
         if (user.getUsername() == null || user.getUsername().isBlank()) {
             bindingResult.rejectValue("username", "required", "El email es obligatorio");
+
         } else if (user.getUsername().length() > 45) {
             bindingResult.rejectValue("username", "length", "El email no puede superar 45 caracteres");
-
-            if (user.getPassword() == null || user.getPassword().isBlank()) {
-                bindingResult.rejectValue("password", "required", "La contrasena es obligatoria");
-            } else if (user.getPassword().length() < 4 || user.getPassword().length() > 72) {
-                bindingResult.rejectValue("password", "length", "La contrasena debe tener entre 4 y 72 caracteres");
-            }
-
-            if (bindingResult.hasErrors()) {
-                return "registro";
-            }
-
-            var auditorRole = roleService.traerPorNombre(Roles.ROLE_AUDITOR);
-            if (auditorRole.isEmpty()) {
-                model.addAttribute("registroError", "No se pudo asignar el rol de usuario. Intenta nuevamente.");
-                return "registro";
-            }
-
-            user.setRoles(List.of(auditorRole.get()));
-            try {
-                userService.saveOrUpdate(user);
-            } catch (DataIntegrityViolationException ex) {
-                bindingResult.rejectValue("username", "duplicate", "Ese email ya esta registrado");
-                return "registro";
-            }
-
-            return "redirect:/login";
         }
-        return "login";
+
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            bindingResult.rejectValue("password", "required", "La contraseña es obligatoria");
+
+        } else if (user.getPassword().length() < 4 || user.getPassword().length() > 72) {
+            bindingResult.rejectValue("password", "length",
+                    "La contraseña debe tener entre 4 y 72 caracteres");
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "registro";
+        }
+
+        var auditorRole = roleService.traerPorNombre(Roles.ROLE_AUDITOR);
+
+        if (auditorRole.isEmpty()) {
+            model.addAttribute("registroError",
+                    "No se pudo asignar el rol de usuario");
+
+            return "registro";
+        }
+
+        user.setRoles(List.of(auditorRole.get()));
+
+        try {
+            userService.saveOrUpdate(user);
+
+        } catch (DataIntegrityViolationException ex) {
+
+            bindingResult.rejectValue("username",
+                    "duplicate",
+                    "Ese email ya está registrado");
+
+            return "registro";
+        }
+
+        return "redirect:/login";
     }
 
     @GetMapping("/login")

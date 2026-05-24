@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Catálogo – Steam</title>
+</head>
+<body>
+
+<h1>Catálogo de Juegos</h1>
+
+<!-- Buscador -->
+<form th:action="@{/catalogo}" method="get">
+    <input type="text" name="busqueda"
+           th:value="${busqueda}"
+           placeholder="Buscar juego..."/>
+    <button type="submit">Buscar</button>
+</form>
+
+<!-- Grilla de juegos -->
+<div th:each="juego : ${juegos}">
+    <img th:src="${juego.imagen}" th:alt="${juego.nombre}" width="200"/>
+    <h3 th:text="${juego.nombre}">Nombre</h3>
+    <p  th:text="${juego.descripcion}">Descripción</p>
+    <p  th:text="'$' + ${juego.precio}">Precio</p>
+    <a  th:href="@{/catalogo/{id}(id=${juego.id})}">Ver detalle</a>
+</div>
+
+<!-- Sin resultados -->
+<p th:if="${#lists.isEmpty(juegos)}">No se encontraron juegos.</p>
+
+<!-- Logout -->
+<a th:href="@{/logout}">Cerrar sesión</a>
+
+</body>
+</html>
