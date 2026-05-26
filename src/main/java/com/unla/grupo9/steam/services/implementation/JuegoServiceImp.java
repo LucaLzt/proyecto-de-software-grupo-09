@@ -33,4 +33,9 @@ public class JuegoServiceImp implements IJuegoService {
     public List<Juego> buscarPorGenero(String genero) {
         return juegoRepository.findByGenero(genero);
     }
+
+    @Override
+    public Juego guardar(Juego juego) {
+        return juegoRepository.save(juego);
+    }
 }

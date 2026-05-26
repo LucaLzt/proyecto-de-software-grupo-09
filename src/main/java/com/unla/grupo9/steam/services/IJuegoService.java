@@ -8,4 +8,5 @@ public interface IJuegoService {
     List<Juego> buscarPorNombre(String nombre);
     Juego obtenerPorId(Long id);
     List<Juego> buscarPorGenero(String genero);
+    Juego guardar(Juego juego);
 }
