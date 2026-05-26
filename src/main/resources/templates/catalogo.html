@@ -1,35 +1,157 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
 <head>
     <meta charset="UTF-8"/>
-    <title>Catálogo – Steam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Catálogo – Steam Mock</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          crossorigin="anonymous">
+    <style>
+        :root {
+            --steam-bg: #0b2838;
+            --steam-accent: #66c0f4;
+            --card-bg: #0f2b38;
+            --text-soft: #b8c7d1;
+        }
+
+        body {
+            background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
+            color: white;
+            min-height: 100vh;
+        }
+
+        .navbar-steam {
+            background: rgba(5, 20, 28, 0.92);
+        }
+
+        .brand-logo {
+            color: var(--steam-accent) !important;
+            font-weight: 700;
+        }
+
+        .card-steam {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+        }
+
+        .game-card {
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .steam-link {
+            color: var(--steam-accent);
+            text-decoration: none;
+        }
+
+        .game-cover {
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .price-pill {
+            color: var(--steam-accent);
+            font-weight: 700;
+        }
+
+        .small-muted {
+            color: var(--text-soft);
+        }
+    </style>
 </head>
 <body>
 
-<h1>Catálogo de Juegos</h1>
+<nav class="navbar navbar-expand-lg navbar-dark navbar-steam">
+    <div class="container py-2">
+        <a class="navbar-brand brand-logo" th:href="@{/home}">Steam Mock</a>
+        <div class="ms-auto d-flex align-items-center gap-2">
+            <a th:href="@{/home}" class="btn btn-outline-light btn-sm">Inicio</a>
+            <a th:href="@{/logout}" class="btn btn-outline-light btn-sm">Cerrar sesión</a>
+        </div>
+    </div>
+</nav>
 
-<!-- Buscador -->
-<form th:action="@{/catalogo}" method="get">
-    <input type="text" name="busqueda"
-           th:value="${busqueda}"
-           placeholder="Buscar juego..."/>
-    <button type="submit">Buscar</button>
-</form>
+<main class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <h1 class="mb-1">Catálogo de juegos</h1>
+            <p class="mb-0 small-muted">Explorá los títulos disponibles en la plataforma.</p>
+        </div>
 
-<!-- Grilla de juegos -->
-<div th:each="juego : ${juegos}">
-    <img th:src="${juego.imagen}" th:alt="${juego.nombre}" width="200"/>
-    <h3 th:text="${juego.nombre}">Nombre</h3>
-    <p  th:text="${juego.descripcion}">Descripción</p>
-    <p  th:text="'$' + ${juego.precio}">Precio</p>
-    <a  th:href="@{/catalogo/{id}(id=${juego.id})}">Ver detalle</a>
-</div>
+        <div class="d-flex gap-2">
+            <form th:action="@{/catalogo}" method="get" class="d-flex gap-2">
+                <label for="busqueda" class="visually-hidden">Buscar juego</label>
+                <input type="text" id="busqueda" name="busqueda" class="form-control form-control-sm"
+                       style="min-width: 240px; background:#0b1f2a; color:white; border-color:rgba(255,255,255,.08);"
+                       th:value="${busqueda}" placeholder="Buscar juego..."/>
+                <input type="hidden" name="genero" th:value="${generoSeleccionado}">
+                <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+            </form>
 
-<!-- Sin resultados -->
-<p th:if="${#lists.isEmpty(juegos)}">No se encontraron juegos.</p>
+            <div class="dropdown">
+                <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="generoMenu"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Género
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="generoMenu">
+                    <li><a class="dropdown-item" th:href="@{/catalogo}">Todos</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" th:href="@{/catalogo(genero='FPS')}">FPS</a></li>
+                    <li><a class="dropdown-item" th:href="@{/catalogo(genero='RPG')}">RPG</a></li>
+                    <li><a class="dropdown-item" th:href="@{/catalogo(genero='Accion')}">Acción</a></li>
+                    <li><a class="dropdown-item" th:href="@{/catalogo(genero='Simulacion')}">Simulación</a></li>
+                    <li><a class="dropdown-item" th:href="@{/catalogo(genero='MOBA')}">MOBA</a></li>
+                    <li><a class="dropdown-item" th:href="@{/catalogo(genero='Aventura')}">Aventura</a></li>
+                    <li><a class="dropdown-item" th:href="@{/catalogo(genero='Puzzle')}">Puzzle</a></li>
+                </ul>
+            </div>
 
-<!-- Logout -->
-<a th:href="@{/logout}">Cerrar sesión</a>
+            <a th:href="@{/juego/nuevo}" sec:authorize="hasRole('ADMIN')" class="btn btn-success btn-sm">
+                + Cargar juego
+            </a>
+        </div>
+    </div>
 
+    <div th:if="${mensajeExito != null}" class="alert alert-success" th:text="${mensajeExito}"></div>
+
+    <div th:if="${generoSeleccionado != null and !generoSeleccionado.isBlank()}"
+         class="mb-3">
+        <span class="badge bg-info text-dark">Filtrando por género: <span th:text="${generoSeleccionado}"></span></span>
+        <a th:href="@{/catalogo(busqueda=${busqueda})}" class="ms-2 steam-link">Limpiar género</a>
+    </div>
+
+    <div class="row g-4" th:if="${!#lists.isEmpty(juegos)}">
+        <div class="col-12 col-md-6 col-lg-4" th:each="juego : ${juegos}">
+            <div class="card card-steam game-card h-100 overflow-hidden">
+                <img th:src="${juego.imagen}" th:alt="${juego.nombre}" class="w-100 game-cover"/>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0" th:text="${juego.nombre}">Nombre</h5>
+                        <span class="price-pill"
+                              th:text="${juego.precio == 0.0 ? 'Gratis' : '$' + juego.precio}">Precio</span>
+                    </div>
+                    <p class="small-muted mb-2" th:text="${juego.descripcion}">Descripción</p>
+                    <p class="mb-3"><span class="small-muted">Género:</span> <span th:text="${juego.genero}"></span></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="steam-link" th:href="@{/catalogo/{id}(id=${juego.id})}">Ver detalle</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${#lists.isEmpty(juegos)}" class="text-center py-5">
+        <h4>No se encontraron juegos.</h4>
+        <p class="small-muted mb-0">Probá con otra búsqueda o cargá un nuevo juego si sos administrador.</p>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
 </body>
 </html>

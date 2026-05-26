@@ -18,13 +18,18 @@ public class CatalogoController {
     private final IJuegoService juegoService;
 
     @GetMapping
-    public String mostrarCatalogo(Model model, @RequestParam(name = "busqueda", required = false) String busqueda) {
+    public String mostrarCatalogo(Model model,
+                                  @RequestParam(name = "busqueda", required = false) String busqueda,
+                                  @RequestParam(name = "genero", required = false) String genero) {
         var juegos = (busqueda != null && !busqueda.isBlank())
                 ? juegoService.buscarPorNombre(busqueda)
+                : (genero != null && !genero.isBlank())
+                ? juegoService.buscarPorGenero(genero)
                 : juegoService.obtenerTodos();
 
         model.addAttribute("juegos", juegos);
         model.addAttribute("busqueda", busqueda);
+        model.addAttribute("generoSeleccionado", genero);
         return "catalogo";
     }
     
