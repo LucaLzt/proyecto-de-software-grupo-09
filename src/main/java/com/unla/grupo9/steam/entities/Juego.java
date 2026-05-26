@@ -1,37 +1,47 @@
 package com.unla.grupo9.steam.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
+@Table(name = "juegos")
 public class Juego {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
-    @Column(name = "nombre", unique = true, nullable = false, length = 45)
-    private String nameGame;
+    @NotBlank(message = "El nombre es obligatorio")
+    private String nombre;
 
+    @NotBlank(message = "La descripción es obligatoria")
+    private String descripcion;
 
-    @Column(name = "descripcion", nullable = false, length = 200)
-    private String description;
+    @NotNull(message = "El precio es obligatorio")
+    @PositiveOrZero(message = "El precio no puede ser negativo")
+    private Double precio;
 
-    @Column(name = "precio", nullable = false)
-    private float price;
+    @NotBlank(message = "La imagen principal es obligatoria")
+    private String imagen;
 
+    @NotBlank(message = "El género es obligatorio")
+    private String genero;
 
-    public Juego(String nameGame, String description, float price) {
-        super();
-        this.nameGame = nameGame;
-        this.description = description;
-        this.price = price;
-    }
+    @NotBlank(message = "Los requisitos mínimos son obligatorios")
+    private String requisitosMinimos;
+
+    @NotBlank(message = "Los requisitos recomendados son obligatorios")
+    private String requisitosRecomendados;
+
+    @NotBlank(message = "El desarrollador es obligatorio")
+    private String desarrollador;
+
+    private String imagenExtra1;
+
+    private String imagenExtra2;
 }

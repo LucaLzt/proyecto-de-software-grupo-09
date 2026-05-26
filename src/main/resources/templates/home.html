@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -46,6 +46,11 @@
         .small-muted {
             color: var(--muted);
         }
+
+        .hero-cta {
+            background: linear-gradient(135deg, rgba(102, 192, 244, 0.16), rgba(18, 47, 61, 0.95));
+            border: 1px solid rgba(102, 192, 244, 0.18);
+        }
     </style>
 </head>
 <body>
@@ -63,14 +68,7 @@
         <div class="collapse navbar-collapse" id="navMain">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link text-white" href="/home">Store</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="#">Library</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="#">Community</a></li>
             </ul>
-
-            <form class="d-flex me-3" role="search" th:action="@{/home}" method="get">
-                <input class="form-control form-control-sm" type="search" placeholder="Buscar juegos..."
-                       aria-label="Search">
-            </form>
 
             <div class="d-flex">
                 <div class="nav-item dropdown">
@@ -96,54 +94,31 @@
 <main class="container mt-4">
     <div class="row">
         <div class="col-12 mb-4">
-            <div class="p-4 rounded game-card">
-                <h1>Bienvenido a Steam Mock</h1>
-                <p class="small-muted">Explorá ofertas, tu biblioteca y la comunidad. Esto es una interfaz simple
-                    inspirada en Steam.</p>
+            <div class="p-4 rounded game-card hero-cta">
+                <h1 class="mb-3">Bienvenido a Steam Mock</h1>
+                <p class="small-muted mb-3">Por ahora estamos armando la base del proyecto. Próximamente vas a ver
+                    destacados, más secciones y nuevas funciones pensadas para la experiencia estilo Steam.</p>
+                <a th:href="@{/catalogo}" class="btn btn-primary">Ir al catálogo</a>
             </div>
         </div>
     </div>
-
-    <!-- Sample grid of games -->
     <div class="row g-3">
-        <div class="col-6 col-md-3">
-            <div class="card game-card p-2">
-                <div style="height:120px; background:#0f3a4a; border-radius:4px;">&nbsp;</div>
-                <div class="card-body p-2">
-                    <h6 class="card-title">Juego A</h6>
-                    <p class="small-muted mb-1">$9.99</p>
-                    <a href="#" class="btn btn-sm btn-outline-light">Ver</a>
-                </div>
+        <div class="col-md-4">
+            <div class="card game-card p-3 h-100">
+                <h5>Explorar catálogo</h5>
+                <p class="small-muted mb-0">Navegá los juegos disponibles desde la sección principal.</p>
             </div>
         </div>
-        <div class="col-6 col-md-3">
-            <div class="card game-card p-2">
-                <div style="height:120px; background:#0f3a4a; border-radius:4px;">&nbsp;</div>
-                <div class="card-body p-2">
-                    <h6 class="card-title">Juego B</h6>
-                    <p class="small-muted mb-1">Gratis</p>
-                    <a href="#" class="btn btn-sm btn-outline-light">Ver</a>
-                </div>
+        <div class="col-md-4">
+            <div class="card game-card p-3 h-100">
+                <h5>Próximamente destacados</h5>
+                <p class="small-muted mb-0">Vamos a sumar recomendaciones y bloques especiales para resaltar juegos.</p>
             </div>
         </div>
-        <div class="col-6 col-md-3">
-            <div class="card game-card p-2">
-                <div style="height:120px; background:#0f3a4a; border-radius:4px;">&nbsp;</div>
-                <div class="card-body p-2">
-                    <h6 class="card-title">Juego C</h6>
-                    <p class="small-muted mb-1">$14.99</p>
-                    <a href="#" class="btn btn-sm btn-outline-light">Ver</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card game-card p-2">
-                <div style="height:120px; background:#0f3a4a; border-radius:4px;">&nbsp;</div>
-                <div class="card-body p-2">
-                    <h6 class="card-title">Juego D</h6>
-                    <p class="small-muted mb-1">$4.99</p>
-                    <a href="#" class="btn btn-sm btn-outline-light">Ver</a>
-                </div>
+        <div class="col-md-4">
+            <div class="card game-card p-3 h-100">
+                <h5>Más funciones en camino</h5>
+                <p class="small-muted mb-0">La idea es ir ampliando la experiencia sin perder la simpleza del proyecto.</p>
             </div>
         </div>
     </div>
