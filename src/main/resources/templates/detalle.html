@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${juego.nombre}">Detalle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet" crossorigin="anonymous">
+    <style>
+        :root {
+            --steam-bg: #0b2838;
+            --steam-accent: #66c0f4;
+            --card-bg: #122f3d;
+            --muted: #94a3b8;
+        }
+        body {
+            background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .navbar-steam { background: rgba(5, 20, 28, 0.9); }
+        .brand-logo { font-weight: 700; color: var(--steam-accent); }
+        .card-dark {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+        }
+        .small-muted { color: var(--muted); }
+        .badge-genero {
+            background: var(--steam-accent);
+            color: #0b2838;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+        }
+        .req-box {
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            padding: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-steam">
+    <div class="container">
+        <a class="navbar-brand brand-logo" th:href="@{/home}">Steam Mock</a>
+        <div class="d-flex">
+            <a th:href="@{/home}" class="btn btn-outline-light btn-sm">← Volver</a>
+        </div>
+    </div>
+</nav>
+
+<main class="container mt-4">
+
+    <!-- Header del juego -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 th:text="${juego.nombre}">Nombre</h1>
+            <span class="badge-genero" th:text="${juego.genero}">Género</span>
+            <span class="small-muted ms-3" th:text="${juego.desarrollador}">Desarrollador</span>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Imagen principal + extras -->
+        <div class="col-md-8">
+            <img th:src="${juego.imagen}" th:alt="${juego.nombre}"
+                 class="w-100 rounded mb-3"
+                 style="max-height:350px; object-fit:cover;"/>
+
+            <!-- Imágenes extra -->
+            <div class="row g-2" th:if="${juego.imagenExtra1 != null}">
+                <div class="col-6">
+                    <img th:src="${juego.imagenExtra1}" class="w-100 rounded"
+                         style="height:140px; object-fit:cover;"/>
+                </div>
+                <div class="col-6" th:if="${juego.imagenExtra2 != null}">
+                    <img th:src="${juego.imagenExtra2}" class="w-100 rounded"
+                         style="height:140px; object-fit:cover;"/>
+                </div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="card-dark p-3 mt-3">
+                <h5>Descripción</h5>
+                <p class="small-muted" th:text="${juego.descripcion}">Descripción</p>
+            </div>
+        </div>
+
+        <!-- Panel lateral -->
+        <div class="col-md-4">
+            <div class="card-dark p-3 mb-3">
+                <h4 th:text="${juego.precio == 0.0 ? 'Gratis' : '$' + juego.precio}"
+                    style="color: #66c0f4;">Precio</h4>
+                <button class="btn btn-success w-100 mt-2">Agregar al carrito</button>
+                <button class="btn btn-outline-light w-100 mt-2">Agregar a favoritos</button>
+            </div>
+
+            <div class="card-dark p-3">
+                <p class="mb-1"><span class="small-muted">Género:</span>
+                    <span th:text="${juego.genero}"></span></p>
+                <p class="mb-1"><span class="small-muted">Desarrollador:</span>
+                    <span th:text="${juego.desarrollador}"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Requisitos del sistema -->
+    <div class="row mt-4 mb-5">
+        <div class="col-12">
+            <div class="card-dark p-3">
+                <h5>Requisitos del sistema</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="req-box">
+                            <h6 style="color: var(--steam-accent)">Mínimos</h6>
+                            <p class="small-muted mb-0"
+                               th:text="${juego.requisitosMinimos != null ?
+                               juego.requisitosMinimos : 'No especificados'}"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="req-box">
+                            <h6 style="color: var(--steam-accent)">Recomendados</h6>
+                            <p class="small-muted mb-0"
+                               th:text="${juego.requisitosRecomendados != null ?
+                               juego.requisitosRecomendados : 'No especificados'}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+</html>

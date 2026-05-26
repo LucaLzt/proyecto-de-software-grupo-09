@@ -28,5 +28,10 @@ public class CatalogoController {
         return "catalogo";
     }
     
-  
+    @GetMapping("/{id}")
+    public String verDetalle(@PathVariable(name="id") Long id, Model model) {
+        Juego juego = juegoService.obtenerPorId(id);
+        model.addAttribute("juego", juego);
+        return "detalle";
+    }
 }

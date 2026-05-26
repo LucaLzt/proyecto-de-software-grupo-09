@@ -17,6 +17,10 @@ public class Juego {
     private Double precio;
     private String imagen;
     private String genero;
-    
+    private String requisitosMinimos;
+    private String requisitosRecomendados;
+    private String desarrollador;
+    private String imagenExtra1;
+    private String imagenExtra2;
    
 }
