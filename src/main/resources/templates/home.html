@@ -65,6 +65,23 @@
                 <li class="nav-item"><a class="nav-link text-white" href="/home">Store</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="#">Library</a></li>
                 <li class="nav-item"><a class="nav-link text-white" href="#">Community</a></li>
+                <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle text-white" href="#" id="categoryMenu" role="button"
+       data-bs-toggle="dropdown" aria-expanded="false">
+        Category
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="categoryMenu">
+        <li><a class="dropdown-item" th:href="@{/home}">Todos</a></li>
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item" th:href="@{/home(genero='FPS')}">FPS</a></li>
+        <li><a class="dropdown-item" th:href="@{/home(genero='RPG')}">RPG</a></li>
+        <li><a class="dropdown-item" th:href="@{/home(genero='Accion')}">Acción</a></li>
+        <li><a class="dropdown-item" th:href="@{/home(genero='Simulacion')}">Simulación</a></li>
+        <li><a class="dropdown-item" th:href="@{/home(genero='MOBA')}">MOBA</a></li>
+		<li><a class="dropdown-item" th:href="@{/home(genero='Aventura')}">Aventura</a></li>
+		<li><a class="dropdown-item" th:href="@{/home(genero='Puzzle')}">Puzzle</a></li>
+    </ul>
+</li>
             </ul>
 
            <form class="d-flex me-3" role="search" th:action="@{/home}" method="get">

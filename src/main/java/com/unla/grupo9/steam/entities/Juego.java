@@ -17,4 +17,6 @@ public class Juego {
     private Double precio;
     private String imagen;
     private String genero;
+    
+   
 }

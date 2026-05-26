@@ -1,10 +1,12 @@
 package com.unla.grupo9.steam.controllers;
 
+import com.unla.grupo9.steam.entities.Juego;
 import com.unla.grupo9.steam.services.IJuegoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -25,4 +27,6 @@ public class CatalogoController {
         model.addAttribute("busqueda", busqueda);
         return "catalogo";
     }
+    
+  
 }

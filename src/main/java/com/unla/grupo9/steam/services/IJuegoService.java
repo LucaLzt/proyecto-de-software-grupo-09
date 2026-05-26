@@ -7,4 +7,5 @@ public interface IJuegoService {
     List<Juego> obtenerTodos();
     List<Juego> buscarPorNombre(String nombre);
     Juego obtenerPorId(Long id);
+    List<Juego> buscarPorGenero(String genero);
 }

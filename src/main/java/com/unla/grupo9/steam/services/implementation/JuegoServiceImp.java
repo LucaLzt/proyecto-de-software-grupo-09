@@ -28,4 +28,9 @@ public class JuegoServiceImp implements IJuegoService {
         return juegoRepository.findById(id)
                .orElseThrow(() -> new RuntimeException("Juego no encontrado"));
     }
+    
+    @Override
+    public List<Juego> buscarPorGenero(String genero) {
+        return juegoRepository.findByGenero(genero);
+    }
 }
