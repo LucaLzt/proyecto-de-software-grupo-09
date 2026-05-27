@@ -38,4 +38,10 @@ public class JuegoServiceImp implements IJuegoService {
     public Juego guardar(Juego juego) {
         return juegoRepository.save(juego);
     }
+
+    @Override
+    public void eliminar(Long id) {
+        juegoRepository.deleteById(id);
+    }
+
 }

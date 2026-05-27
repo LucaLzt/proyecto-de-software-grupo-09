@@ -16,6 +16,11 @@ public class Juego {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "El creador es obligatorio")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_usuario_creador", nullable = false)
+    private User creador;
+
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
 

@@ -139,6 +139,14 @@
                     <p class="mb-3"><span class="small-muted">Género:</span> <span th:text="${juego.genero}"></span></p>
                     <div class="d-flex justify-content-between align-items-center">
                         <a class="steam-link" th:href="@{/catalogo/{id}(id=${juego.id})}">Ver detalle</a>
+
+                        <a th:if="${juego.creador != null && juego.creador.username == usuarioActual}"
+                           th:href="@{/juego/eliminar/{id}(id=${juego.id})}"
+                           class="btn btn-outline-danger btn-sm"
+                           style="border-radius: 6px; padding: 2px 10px; font-size: 0.85rem;"
+                           onclick="return confirm('¿Estás seguro de que querés eliminar este juego?');">
+                            Eliminar
+                        </a>
                     </div>
                 </div>
             </div>
