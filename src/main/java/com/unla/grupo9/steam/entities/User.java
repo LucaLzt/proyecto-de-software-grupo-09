@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -42,6 +43,15 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "roles_usuarios", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_rol"))
     private List<UserRole> roles;
+    
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Carrito carrito;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "favoritos",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "juego_id"))
+    private Set<Juego> favoritos;
 
     public User(String username, String password, boolean enabled, LocalDateTime createdAt, LocalDateTime updatedAt,
                 List<UserRole> roles) {

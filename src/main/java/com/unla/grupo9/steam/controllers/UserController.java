@@ -15,7 +15,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/")
 public class UserController {
 
     private final UserRoleService roleService;
@@ -91,6 +90,6 @@ public class UserController {
 
     @GetMapping("/loginsuccess")
     public String loginCheck() {
-        return "redirect:/home";
+        return "redirect:/catalogo";
     }
 }

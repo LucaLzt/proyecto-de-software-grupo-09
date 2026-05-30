@@ -1,0 +1,406 @@
+:root {
+    --steam-bg: #0b2838;
+    --steam-accent: #66c0f4;
+    --card-bg: #122f3d;
+    --muted: #94a3b8;
+}
+
+body {
+    background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
+    color: white;
+    min-height: 100vh;
+}
+
+.navbar-steam {
+    background: rgba(5, 20, 28, 0.9);
+}
+
+.brand-logo {
+    font-weight: 700;
+    color: var(--steam-accent);
+}
+
+.game-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    color: white;
+}
+
+.footer {
+    margin-top: 40px;
+    padding: 20px 0;
+    text-align: center;
+    color: var(--muted);
+}
+
+.small-muted {
+    color: var(--muted);
+}
+
+.hero-cta {
+    background: linear-gradient(135deg, rgba(102, 192, 244, 0.16), rgba(18, 47, 61, 0.95));
+    border: 1px solid rgba(102, 192, 244, 0.18);
+}
+
+.btn-steam-blue {
+    background: linear-gradient(to right, #47bfff 5%, #1a44c2 60%);
+    background-size: 300% 100%;
+    background-position: 25%;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-steam-blue:hover {
+    background-position: 100%;
+    color: white;
+}
+
+.btn-steam-green {
+    background: linear-gradient(to right, #75b022 5%, #588a1b 95%);
+    color: white;
+    border: none;
+}
+
+.btn-steam-green:hover {
+    background: linear-gradient(to right, #8ed629 5%, #6aa621 95%);
+    color: white;
+}
+
+.brand-logo {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.steam-text {
+    font-family: "Arial Black", "Impact", sans-serif;
+    font-size: 1.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    /* Degradado metálico/blanco clásico del texto de Steam */
+    background: linear-gradient(180deg, #ffffff 0%, #dcdedf 50%, #8f98a0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.mock-text {
+    font-family: "Arial", sans-serif;
+    font-size: 1.7rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-left: 6px;
+    /* Color celeste/neón que usamos en los detalles */
+    color: var(--steam-accent);
+    text-shadow: 0 0 10px rgba(102, 192, 244, 0.5);
+}
+
+:root {
+    --steam-bg: #0b2838;
+    --steam-accent: #66c0f4;
+    --card-bg: #0f2b38;
+    --text-soft: #b8c7d1;
+}
+
+body {
+    background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
+    color: white;
+    min-height: 100vh;
+}
+
+.navbar-steam {
+    background: rgba(5, 20, 28, 0.92);
+}
+
+.brand-logo {
+    color: var(--steam-accent) !important;
+    font-weight: 700;
+}
+
+.card-steam {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+}
+
+.game-card {
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.game-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+}
+
+.steam-link {
+    color: var(--steam-accent);
+    text-decoration: none;
+}
+
+.game-cover {
+    height: 180px;
+    object-fit: cover;
+}
+
+.price-pill {
+    color: var(--steam-accent);
+    font-weight: 700;
+}
+
+.small-muted {
+    color: var(--text-soft);
+}
+
+/* Modal dark styling */
+.modal-content {
+    background-color: var(--card-bg);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-close {
+    filter: invert(1);
+}
+
+.steam-options-bar {
+    background-color: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    padding: 12px 16px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.steam-input {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    color: white !important;
+    border: 1px solid #1a3a4d !important;
+    transition: border-color 0.2s ease;
+}
+
+.steam-input:focus {
+    border-color: var(--steam-accent) !important;
+    box-shadow: 0 0 5px rgba(102, 192, 244, 0.3) !important;
+}
+
+/* Botón de búsqueda (Degradado azul Steam) */
+.btn-steam-blue {
+    background: linear-gradient(to right, #47bfff 5%, #1a44c2 60%);
+    background-size: 300% 100%;
+    background-position: 25%;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-steam-blue:hover {
+    background-position: 100%;
+    color: white;
+}
+
+/* Botón de filtros (Borde celeste) */
+.btn-steam-outline {
+    background: rgba(102, 192, 244, 0.1);
+    color: var(--steam-accent);
+    border: 1px solid var(--steam-accent);
+    transition: all 0.2s ease;
+}
+
+.btn-steam-outline:hover {
+    background: var(--steam-accent);
+    color: #0b2838;
+}
+
+/* Botón de Cargar Juego (Verde Steam) */
+.btn-steam-green {
+    background: linear-gradient(to right, #75b022 5%, #588a1b 95%);
+    color: white;
+    border: none;
+}
+
+.btn-steam-green:hover {
+    background: linear-gradient(to right, #8ed629 5%, #6aa621 95%);
+    color: white;
+}
+
+:root {
+    --steam-bg: #0b2838;
+    --steam-accent: #66c0f4;
+    --card-bg: #122f3d;
+    --muted: #94a3b8;
+}
+body {
+    background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
+    color: white;
+    min-height: 100vh;
+}
+.navbar-steam { background: rgba(5, 20, 28, 0.9); }
+.brand-logo { font-weight: 700; color: var(--steam-accent); }
+.card-dark {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 8px;
+}
+.small-muted { color: var(--muted); }
+.badge-genero {
+    background: var(--steam-accent);
+    color: #0b2838;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+.req-box {
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.btn-steam-green {
+    background: linear-gradient(to right, #75b022 5%, #588a1b 95%);
+    color: white;
+    border: none;
+}
+
+.btn-steam-green:hover {
+    background: linear-gradient(to right, #8ed629 5%, #6aa621 95%);
+    color: white;
+}
+
+:root {
+    --steam-bg: #0b2838;
+    --steam-accent: #66c0f4;
+    --card-bg: #0f2b38;
+    --text-soft: #b8c7d1;
+}
+
+body {
+    background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
+    color: white;
+    min-height: 100vh;
+}
+
+.navbar-steam {
+    background: rgba(5, 20, 28, 0.92);
+}
+
+.brand-logo {
+    color: var(--steam-accent) !important;
+    font-weight: 700;
+}
+
+.table {
+    color: white;
+}
+
+.table th {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.table td, .table th {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.modal-content {
+    background-color: var(--card-bg);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.modal-footer {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.btn-close {
+    filter: invert(1);
+}
+
+:root {
+    --steam-bg: #0b2838;
+    --steam-accent: #66c0f4;
+    --card-bg: #0f2b38;
+    --text-soft: #b8c7d1;
+}
+
+body {
+    background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo de la caja central */
+.login-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Textos y enlaces */
+.small-muted {
+    color: var(--text-soft);
+}
+
+a.steam-link {
+    color: var(--steam-accent);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a.steam-link:hover {
+    color: white;
+}
+
+/* Cajas de texto oscuras */
+.steam-input {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    color: white !important;
+    border: 1px solid #1a3a4d !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    padding: 10px;
+}
+
+.steam-input:focus {
+    border-color: var(--steam-accent) !important;
+    box-shadow: 0 0 5px rgba(102, 192, 244, 0.3) !important;
+}
+
+/* Checkbox oscuro */
+.form-check-input {
+    background-color: rgba(0,0,0,0.4);
+    border: 1px solid #1a3a4d;
+}
+
+.form-check-input:checked {
+    background-color: var(--steam-accent);
+    border-color: var(--steam-accent);
+}
+
+/* Botón de inicio de sesión */
+.btn-steam-blue {
+    background: linear-gradient(to right, #47bfff 5%, #1a44c2 60%);
+    background-size: 300% 100%;
+    background-position: 25%;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    padding: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-steam-blue:hover {
+    background-position: 100%;
+    color: white;
+    box-shadow: 0 5px 15px rgba(26, 68, 194, 0.4);
+}

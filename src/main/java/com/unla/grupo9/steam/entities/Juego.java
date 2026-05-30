@@ -7,6 +7,8 @@ import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.util.Set;
+
 @Entity
 @Data
 @Table(name = "juegos")
@@ -44,4 +46,7 @@ public class Juego {
     private String imagenExtra1;
 
     private String imagenExtra2;
+
+    @ManyToMany(mappedBy = "favoritos")
+    private Set<User> fans;
 }

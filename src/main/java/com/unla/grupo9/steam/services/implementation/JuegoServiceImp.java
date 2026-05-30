@@ -38,4 +38,9 @@ public class JuegoServiceImp implements IJuegoService {
     public Juego guardar(Juego juego) {
         return juegoRepository.save(juego);
     }
+
+    @Override
+    public Juego obtenerJuegoPorId(Long id) {
+        return juegoRepository.findById(id).orElse(null);
+    }
 }

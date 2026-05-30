@@ -1,0 +1,13 @@
+body {
+    background: #071825;
+    color: #fff
+}
+
+.reg-card {
+    background: #0f2b38;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.steam-link {
+    color: #66c0f4;
+}
