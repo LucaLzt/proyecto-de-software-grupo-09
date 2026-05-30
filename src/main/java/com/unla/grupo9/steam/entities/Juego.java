@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.Set;
@@ -17,6 +16,11 @@ public class Juego {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    // El creador se asigna en el servidor al guardar el formulario
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario_creador", nullable = true)
+    private User creador;
 
     @NotBlank(message = "El nombre es obligatorio")
     private String nombre;

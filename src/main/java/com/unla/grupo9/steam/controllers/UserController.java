@@ -27,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String guardar(@ModelAttribute("usuario") User user,BindingResult bindingResult,Model model) {
+    public String guardar(@ModelAttribute("usuario") User user, BindingResult bindingResult, Model model) {
 
         if (user.getUsername() == null || user.getUsername().isBlank()) {
             bindingResult.rejectValue("username", "required", "El email es obligatorio");

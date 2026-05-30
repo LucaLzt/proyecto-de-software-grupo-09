@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+
 @Controller
 @RequestMapping("/catalogo")
 @RequiredArgsConstructor
@@ -27,7 +29,8 @@ public class CatalogoController {
     @GetMapping
     public String mostrarCatalogo(Model model,
                                   @RequestParam(name = "busqueda", required = false) String busqueda,
-                                  @RequestParam(name = "genero", required = false) String genero) {
+                                  @RequestParam(name = "genero", required = false) String genero,
+                                  Principal principal) {
         var juegos = (busqueda != null && !busqueda.isBlank())
                 ? juegoService.buscarPorNombre(busqueda)
                 : (genero != null && !genero.isBlank())
@@ -37,6 +40,11 @@ public class CatalogoController {
         model.addAttribute("juegos", juegos);
         model.addAttribute("busqueda", busqueda);
         model.addAttribute("generoSeleccionado", genero);
+
+        if (principal != null) {
+            model.addAttribute("usuarioActual", principal.getName());
+        }
+
         return "catalogo";
     }
 

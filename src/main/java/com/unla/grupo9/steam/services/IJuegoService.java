@@ -9,5 +9,6 @@ public interface IJuegoService {
     Juego obtenerPorId(Long id);
     List<Juego> buscarPorGenero(String genero);
     Juego guardar(Juego juego);
+    void eliminar(Long id);
     Juego obtenerJuegoPorId(Long id);
 }

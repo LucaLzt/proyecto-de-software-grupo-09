@@ -97,6 +97,26 @@
 
     <div class="row g-4" th:if="${!#lists.isEmpty(juegos)}">
         <div class="col-12 col-md-6 col-lg-4" th:each="juego : ${juegos}">
+            <div class="card card-steam game-card h-100 overflow-hidden">
+                <img th:src="${juego.imagen}" th:alt="${juego.nombre}" class="w-100 game-cover"/>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0" th:text="${juego.nombre}">Nombre</h5>
+                        <span class="price-pill"
+                              th:text="${juego.precio == 0.0 ? 'Gratis' : '$' + juego.precio}">Precio</span>
+                    </div>
+                    <p class="small-muted mb-2" th:text="${juego.descripcion}">Descripción</p>
+                    <p class="mb-3"><span class="small-muted">Género:</span> <span th:text="${juego.genero}"></span></p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a class="steam-link" th:href="@{/catalogo/{id}(id=${juego.id})}">Ver detalle</a>
+
+                        <a th:if="${juego.creador != null && juego.creador.username == usuarioActual}"
+                           th:href="@{/juego/eliminar/{id}(id=${juego.id})}"
+                           class="btn btn-outline-danger btn-sm"
+                           style="border-radius: 6px; padding: 2px 10px; font-size: 0.85rem;"
+                           onclick="return confirm('¿Estás seguro de que querés eliminar este juego?');">
+                            Eliminar
+                        </a>
             <a th:href="@{/catalogo/{id}(id=${juego.id})}" class="text-decoration-none">
                 <div class="card card-steam game-card h-100 overflow-hidden">
                     <img th:src="${juego.imagen}" th:alt="${juego.nombre}" class="w-100 game-cover"/>
