@@ -44,4 +44,9 @@ public class JuegoServiceImp implements IJuegoService {
         juegoRepository.deleteById(id);
     }
 
+
+    @Override
+    public Juego obtenerJuegoPorId(Long id) {
+        return juegoRepository.findById(id).orElse(null);
+    }
 }

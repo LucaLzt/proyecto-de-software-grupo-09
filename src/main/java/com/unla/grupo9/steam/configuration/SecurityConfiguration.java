@@ -38,7 +38,8 @@ public class SecurityConfiguration {
         http
                 .userDetailsService(userDetailsService)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/login", "/registro", "/save").permitAll()
+                        .requestMatchers("/", "/home", "/login", "/registro", "/save", "/catalogo", "/catalogo/**").permitAll()
+                        .requestMatchers("/carrito/**", "/favoritos/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -74,6 +75,6 @@ public class SecurityConfiguration {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                .requestMatchers("/static/**", "/js/**", "/css/**", "/img/**", "/json/**");
+                .requestMatchers("/static/**", "/js/**", "/css/**", "/images/**", "/json/**");
     }
 }

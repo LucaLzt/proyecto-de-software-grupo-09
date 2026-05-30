@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tu Carrito de Compras – Steam Mock</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/loader.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <style>
+        :root {
+            --steam-bg: #0b2838;
+            --steam-accent: #66c0f4;
+            --card-bg: #0f2b38;
+            --text-soft: #b8c7d1;
+            --steam-green: #588a1b;
+        }
+
+        body {
+            background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
+            color: white;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- BARRA DE NAVEGACIÓN --- */
+        .navbar-steam {
+            background: rgba(5, 20, 28, 0.92);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Logotipo tipográfico del Grupo 9 */
+        .brand-logo {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .steam-text {
+            font-family: "Arial Black", "Impact", sans-serif;
+            font-size: 1.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: linear-gradient(180deg, #ffffff 0%, #dcdedf 50%, #8f98a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        .mock-text {
+            font-family: "Arial", sans-serif;
+            font-size: 1.7rem;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-left: 6px;
+            color: var(--steam-accent);
+            text-shadow: 0 0 10px rgba(102, 192, 244, 0.5);
+        }
+
+        /* --- ESTILOS DEL CARRITO --- */
+        .cart-container {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Rediseño de la tabla estilo Steam */
+        .steam-table {
+            color: #fff !important;
+            border-collapse: separate;
+            border-spacing: 0 8px; /* Espaciado entre filas */
+        }
+
+        .steam-table thead th {
+            border-bottom: none;
+            color: var(--text-soft);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            padding-left: 15px;
+        }
+
+        .steam-table tbody tr {
+            background-color: rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s;
+        }
+
+        .steam-table tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .steam-table tbody td {
+            border: none;
+            padding: 20px 15px;
+            vertical-align: middle;
+        }
+
+        .steam-table tbody td:first-child {
+            border-radius: 4px 0 0 4px;
+        }
+
+        .steam-table tbody td:last-child {
+            border-radius: 0 4px 4px 0;
+        }
+
+        .game-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .price-text {
+            color: var(--steam-accent);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .total-section {
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 4px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        /* --- BOTONES TEMÁTICOS --- */
+
+        /* Botón Azul (Catálogo, Carrito, Aceptar) */
+        .btn-steam-blue {
+            background: linear-gradient(to right, #47bfff 5%, #1a44c2 60%);
+            background-size: 300% 100%;
+            background-position: 25%;
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-steam-blue:hover {
+            background-position: 100%;
+            color: white;
+            box-shadow: 0 0 10px rgba(102,192,244,0.5);
+        }
+
+        /* Botón Verde (Login, Comprar, Seguir) */
+        .btn-steam-green {
+            background: linear-gradient(to right, #75b022 5%, #588a1b 95%);
+            color: white;
+            border: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .btn-steam-green:hover {
+            background: linear-gradient(to right, #8ed629 5%, #6aa621 95%);
+            color: white;
+            box-shadow: 0 0 10px rgba(117,176,34,0.5);
+        }
+
+        /* Botón Outline (Volver, Eliminar) */
+        .btn-steam-outline {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s;
+        }
+
+        .btn-steam-outline:hover {
+            background: rgba(255, 53, 69, 0.1);
+            color: #ff6b7a;
+            border-color: #dc3545;
+        }
+
+        /* --- MODAL DE COMPRA EXITOSA (TIPO POP-UP GAME) --- */
+        .modal-steam .modal-content {
+            background-color: var(--card-bg);
+            color: white;
+            border: 1px solid #1a3a4d; /* Borde celeste oscuro */
+            border-radius: 8px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+        }
+        .modal-steam .modal-header {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 15px 25px;
+        }
+        .modal-steam .modal-title {
+            color: var(--steam-accent);
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .modal-steam .modal-body {
+            padding: 25px;
+            font-size: 1.1rem;
+            color: #eee;
+        }
+        .modal-steam .modal-footer {
+            border-top: none;
+            padding: 0 25px 25px 25px;
+        }
+        .modal-steam .btn-close {
+            filter: invert(1) grayscale(1) brightness(2); /* Vuelve la X blanca */
+        }
+
+        /* Footer */
+        .footer-steam {
+            color: var(--text-soft);
+            background-color: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 15px 0;
+            margin-top: auto;
+            font-size: 0.85rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark navbar-steam">
+    <div class="container py-2">
+        <a class="navbar-brand brand-logo" th:href="@{/home}">
+            <img th:src="@{/images/logo.png}" alt="Steam Mock Logo" width="45" height="45" class="me-2 align-middle" style="filter: drop-shadow(0 0 5px rgba(102,192,244,0.3));">
+            <div class="d-inline-block align-middle" style="line-height: 1;">
+                <span class="steam-text">STEAM</span><span class="mock-text">MOCK</span>
+            </div>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-2">
+            <a th:href="@{/catalogo}" class="btn btn-steam-blue btn-sm px-3">Catálogo</a>
+            <a th:href="@{/login}" sec:authorize="isAnonymous()" class="btn btn-steam-green">Iniciar sesión</a>
+            <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-steam-green">Cerrar sesión</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <div class="cart-container">
+        <h1 class="mb-4 fw-bold">Tu Carrito de Compras</h1>
+
+        <div th:if="${carrito != null && !carrito.items.isEmpty()}">
+            <table class="table steam-table">
+                <thead>
+                <tr class="game-name">
+                    <th style="width: 60%" >Juego</th>
+                    <th style="width: 25%" >Precio</th>
+                    <th style="width: 15%" class="text-center">Acción</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${carrito.items}">
+                    <td>
+                        <span class="game-name" th:text="${item.juego.nombre}">Nombre del Juego</span>
+                        <div class="small text-muted" th:text="${item.juego.genero}">Género</div>
+                    </td>
+                    <td class="price-text" th:text="${item.juego.precio == 0.0 ? 'Gratis' : '$' + item.juego.precio}">$0.0</td>
+                    <td class="text-center">
+                        <form th:action="@{/carrito/eliminar/{juegoId}(juegoId=${item.juego.id})}" method="post">
+                            <button type="submit" class="btn btn-steam-outline btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="total-section d-flex justify-content-between align-items-center mt-4">
+                <h3 class="mb-0 fw-bold">Total estimado</h3>
+                <div class="text-end d-flex align-items-center gap-4">
+                    <h2 class="price-text mb-0 fs-1" th:text="'$' + ${carrito.total}">$0.0</h2>
+                    <form th:action="@{/carrito/comprar}" method="post">
+                        <button type="submit" class="btn btn-steam-green btn-lg px-5 fs-5">Comprar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${carrito == null || carrito.items.isEmpty()}" class="text-center py-5">
+            <h4 class="small-muted">Tu carrito está vacío.</h4>
+            <p class="mb-4">Parece que aún no has añadido ningún título.</p>
+            <a th:href="@{/catalogo}" class="btn btn-steam-blue">Explorar el Catálogo</a>
+        </div>
+
+        <div th:if="${carrito != null && !carrito.items.isEmpty()}" class="mt-4">
+            <a th:href="@{/catalogo}" class="btn btn-steam-blue btn-sm px-3">← Seguir comprando</a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-steam" id="compraModal" tabindex="-1" aria-labelledby="compraModalLabel" aria-hidden="true" th:if="${mensajeCompra != null}">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="compraModalLabel">¡Éxito!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div style="font-size: 3rem; color: #75b022; margin-bottom: 15px;">✓</div>
+                <span th:text="${mensajeCompra}">¡Juego comprado con éxito!</span>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <a th:href="@{/catalogo}" class="btn btn-steam-blue px-4">Aceptar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">Grupo 9 — Interfaz de ejemplo</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+<script th:if="${mensajeCompra != null}">
+    document.addEventListener("DOMContentLoaded", function() {
+        var compraModalEl = document.getElementById('compraModal');
+        // Inicializamos el modal usando la API de Bootstrap 5
+        var myModal = new bootstrap.Modal(compraModalEl);
+        // Mostramos el modal automáticamente al cargar la página
+        myModal.show();
+    });
+</script>
+
+<script th:src="@{/js/loader.js}"></script>
+</body>
+</html>

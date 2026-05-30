@@ -4,103 +4,56 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Catálogo – Steam Mock</title>
+    <link rel="icon" th:href="@{/images/favicon.png}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           crossorigin="anonymous">
-    <style>
-        :root {
-            --steam-bg: #0b2838;
-            --steam-accent: #66c0f4;
-            --card-bg: #0f2b38;
-            --text-soft: #b8c7d1;
-        }
-
-        body {
-            background: linear-gradient(180deg, var(--steam-bg) 0%, #071825 100%);
-            color: white;
-            min-height: 100vh;
-        }
-
-        .navbar-steam {
-            background: rgba(5, 20, 28, 0.92);
-        }
-
-        .brand-logo {
-            color: var(--steam-accent) !important;
-            font-weight: 700;
-        }
-
-        .card-steam {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-        }
-
-        .game-card {
-            transition: transform .15s ease, box-shadow .15s ease;
-        }
-
-        .game-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
-        }
-
-        .steam-link {
-            color: var(--steam-accent);
-            text-decoration: none;
-        }
-
-        .game-cover {
-            height: 180px;
-            object-fit: cover;
-        }
-
-        .price-pill {
-            color: var(--steam-accent);
-            font-weight: 700;
-        }
-
-        .small-muted {
-            color: var(--text-soft);
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/loader.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark navbar-steam">
     <div class="container py-2">
-        <a class="navbar-brand brand-logo" th:href="@{/home}">Steam Mock</a>
+        <a class="navbar-brand brand-logo" th:href="@{/home}">
+            <img th:src="@{/images/logo.png}" alt="Steam Mock Logo" width="45" height="45" class="me-2 align-middle" style="filter: drop-shadow(0 0 5px rgba(102,192,244,0.3));">
+            <div class="d-inline-block align-middle" style="line-height: 1;">
+                <span class="steam-text">STEAM</span><span class="mock-text">MOCK</span>
+            </div>
+        </a>
         <div class="ms-auto d-flex align-items-center gap-2">
-            <a th:href="@{/home}" class="btn btn-outline-light btn-sm">Inicio</a>
-            <a th:href="@{/logout}" class="btn btn-outline-light btn-sm">Cerrar sesión</a>
+            <a th:href="@{/carrito}" sec:authorize="isAuthenticated()" class="btn btn-steam-blue btn-sm px-3">Carrito</a>
+            <a th:href="@{/login}" sec:authorize="isAnonymous()" class="btn btn-steam-green">Iniciar sesión</a>
+            <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-steam-green">Cerrar sesión</a>
         </div>
     </div>
 </nav>
 
 <main class="container py-4">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
         <div>
             <h1 class="mb-1">Catálogo de juegos</h1>
             <p class="mb-0 small-muted">Explorá los títulos disponibles en la plataforma.</p>
         </div>
 
-        <div class="d-flex gap-2">
-            <form th:action="@{/catalogo}" method="get" class="d-flex gap-2">
+        <div class="steam-options-bar d-flex gap-2 flex-wrap align-items-center">
+
+            <form th:action="@{/catalogo}" method="get" class="d-flex gap-2 mb-0">
                 <label for="busqueda" class="visually-hidden">Buscar juego</label>
-                <input type="text" id="busqueda" name="busqueda" class="form-control form-control-sm"
-                       style="min-width: 240px; background:#0b1f2a; color:white; border-color:rgba(255,255,255,.08);"
-                       th:value="${busqueda}" placeholder="Buscar juego..."/>
+                <input type="text" id="busqueda" name="busqueda" class="form-control form-control-sm steam-input"
+                       style="min-width: 240px;" th:value="${busqueda}" placeholder="Buscar juego..."/>
                 <input type="hidden" name="genero" th:value="${generoSeleccionado}">
-                <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+                <button type="submit" class="btn btn-steam-blue btn-sm px-3">Buscar</button>
             </form>
 
             <div class="dropdown">
-                <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" id="generoMenu"
+                <button class="btn btn-steam-outline btn-sm dropdown-toggle" type="button" id="generoMenu"
                         data-bs-toggle="dropdown" aria-expanded="false">
                     Género
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="generoMenu">
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" style="background-color: var(--card-bg); border: 1px solid #1a3a4d;" aria-labelledby="generoMenu">
                     <li><a class="dropdown-item" th:href="@{/catalogo}">Todos</a></li>
-                    <li><hr class="dropdown-divider"></li>
+                    <li><hr class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></li>
                     <li><a class="dropdown-item" th:href="@{/catalogo(genero='FPS')}">FPS</a></li>
                     <li><a class="dropdown-item" th:href="@{/catalogo(genero='RPG')}">RPG</a></li>
                     <li><a class="dropdown-item" th:href="@{/catalogo(genero='Accion')}">Acción</a></li>
@@ -111,13 +64,30 @@
                 </ul>
             </div>
 
-            <a th:href="@{/juego/nuevo}" sec:authorize="hasRole('ADMIN')" class="btn btn-success btn-sm">
+            <a th:href="@{/juego/nuevo}" sec:authorize="hasRole('ADMIN')" class="btn btn-steam-green btn-sm ms-2">
                 + Cargar juego
             </a>
         </div>
     </div>
 
-    <div th:if="${mensajeExito != null}" class="alert alert-success" th:text="${mensajeExito}"></div>
+    <!-- The Modal -->
+    <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true" th:if="${mensajeExito != null}">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="carritoModalLabel">¡Éxito!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" th:text="${mensajeExito}">
+                    El juego se ha añadido a tu carrito.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir comprando</button>
+                    <a th:href="@{/carrito}" class="btn btn-primary">Ir al carrito</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div th:if="${generoSeleccionado != null and !generoSeleccionado.isBlank()}"
          class="mb-3">
@@ -147,9 +117,20 @@
                            onclick="return confirm('¿Estás seguro de que querés eliminar este juego?');">
                             Eliminar
                         </a>
+            <a th:href="@{/catalogo/{id}(id=${juego.id})}" class="text-decoration-none">
+                <div class="card card-steam game-card h-100 overflow-hidden">
+                    <img th:src="${juego.imagen}" th:alt="${juego.nombre}" class="w-100 game-cover"/>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title mb-0" th:text="${juego.nombre}">Nombre</h5>
+                            <span class="price-pill"
+                                  th:text="${juego.precio == 0.0 ? 'Gratis' : '$' + juego.precio}">Precio</span>
+                        </div>
+                        <p class="small-muted mb-2" th:text="${juego.descripcion}">Descripción</p>
+                        <p class="mb-3"><span class="small-muted">Género:</span> <span th:text="${juego.genero}"></span></p>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
@@ -157,9 +138,19 @@
         <h4>No se encontraron juegos.</h4>
         <p class="small-muted mb-0">Probá con otra búsqueda o cargá un nuevo juego si sos administrador.</p>
     </div>
+    <div class="footer">Grupo 9 — Interfaz de ejemplo</div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
+
+<!-- Script para mostrar el modal automáticamente si existe -->
+<script th:if="${mensajeExito != null}">
+    document.addEventListener("DOMContentLoaded", function() {
+        var myModal = new bootstrap.Modal(document.getElementById('carritoModal'));
+        myModal.show();
+    });
+</script>
+<script th:src="@{/js/loader.js}"></script>
 </body>
 </html>
