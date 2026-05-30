@@ -92,7 +92,10 @@
     <div class="card card-steam p-4">
         <form th:action="@{/juego/guardar}" th:object="${juego}" method="post" class="row g-3">
             <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger col-12 mb-0">
-                Revisá los campos marcados antes de guardar.
+                <div>Revisá los campos marcados antes de guardar.</div>
+                <ul class="mb-0 mt-2" style="list-style: none; padding-left: 0;">
+                    <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+                </ul>
             </div>
 
             <div class="col-md-6">
@@ -113,9 +116,10 @@
 
             <div class="col-md-4">
                 <label for="precio" class="form-label">Precio</label>
-                <input type="number" id="precio" step="0.01" min="0" th:field="*{precio}" class="form-control"
+                <!-- Usar input tipo texto con inputmode decimal para forzar punto como separador -->
+                <input type="text" id="precio" inputmode="decimal" pattern="\d+(\.\d{1,2})?" th:field="*{precio}" class="form-control"
                        th:classappend="${#fields.hasErrors('precio')} ? ' is-invalid' : ''"
-                       placeholder="0.00">
+                       placeholder="0.00" title="Usá punto como separador decimal, p.ej. 19.99">
                 <div class="invalid-feedback" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></div>
             </div>
 
