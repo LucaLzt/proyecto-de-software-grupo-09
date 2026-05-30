@@ -80,6 +80,13 @@
             border-spacing: 0 8px; /* Espaciado entre filas */
         }
 
+        /* Bootstrap 5.3 pinta la tabla con fondo blanco por defecto; lo anulamos acá */
+        .steam-table > :not(caption) > * > * {
+            background-color: transparent !important;
+            color: #fff !important;
+            box-shadow: none !important;
+        }
+
         .steam-table thead th {
             border-bottom: none;
             color: var(--text-soft);
@@ -87,6 +94,7 @@
             font-size: 0.8rem;
             letter-spacing: 1px;
             padding-left: 15px;
+            background-color: rgba(255,255,255,0.03) !important;
         }
 
         .steam-table tbody tr {
@@ -102,6 +110,7 @@
             border: none;
             padding: 20px 15px;
             vertical-align: middle;
+            background-color: rgba(0, 0, 0, 0.2) !important;
         }
 
         .steam-table tbody td:first-child {
@@ -115,6 +124,7 @@
         .game-name {
             font-size: 1.1rem;
             font-weight: 600;
+            color: #fff;
         }
 
         .price-text {
@@ -128,6 +138,10 @@
             border-radius: 4px;
             padding: 20px;
             margin-top: 20px;
+        }
+
+        .steam-table .text-muted {
+            color: var(--text-soft) !important;
         }
 
         /* --- BOTONES TEMÁTICOS --- */

@@ -15,13 +15,15 @@
 <nav class="navbar navbar-expand-lg navbar-dark navbar-steam">
     <div class="container py-2">
         <a class="navbar-brand brand-logo" th:href="@{/home}">
-            <img th:src="@{/images/logo.png}" alt="Steam Mock Logo" width="45" height="45" class="me-2 align-middle" style="filter: drop-shadow(0 0 5px rgba(102,192,244,0.3));">
+            <img th:src="@{/images/logo.png}" alt="Steam Mock Logo" width="45" height="45" class="me-2 align-middle"
+                 style="filter: drop-shadow(0 0 5px rgba(102,192,244,0.3));">
             <div class="d-inline-block align-middle" style="line-height: 1;">
                 <span class="steam-text">STEAM</span><span class="mock-text">MOCK</span>
             </div>
         </a>
         <div class="ms-auto d-flex align-items-center gap-2">
-            <a th:href="@{/carrito}" sec:authorize="isAuthenticated()" class="btn btn-steam-blue btn-sm px-3">Carrito</a>
+            <a th:href="@{/carrito}" sec:authorize="isAuthenticated()"
+               class="btn btn-steam-blue btn-sm px-3">Carrito</a>
             <a th:href="@{/login}" sec:authorize="isAnonymous()" class="btn btn-steam-green">Iniciar sesión</a>
             <a th:href="@{/logout}" sec:authorize="isAuthenticated()" class="btn btn-steam-green">Cerrar sesión</a>
         </div>
@@ -51,9 +53,12 @@
                         data-bs-toggle="dropdown" aria-expanded="false">
                     Género
                 </button>
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark" style="background-color: var(--card-bg); border: 1px solid #1a3a4d;" aria-labelledby="generoMenu">
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark"
+                    style="background-color: var(--card-bg); border: 1px solid #1a3a4d;" aria-labelledby="generoMenu">
                     <li><a class="dropdown-item" th:href="@{/catalogo}">Todos</a></li>
-                    <li><hr class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></li>
+                    <li>
+                        <hr class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);">
+                    </li>
                     <li><a class="dropdown-item" th:href="@{/catalogo(genero='FPS')}">FPS</a></li>
                     <li><a class="dropdown-item" th:href="@{/catalogo(genero='RPG')}">RPG</a></li>
                     <li><a class="dropdown-item" th:href="@{/catalogo(genero='Accion')}">Acción</a></li>
@@ -71,7 +76,8 @@
     </div>
 
     <!-- The Modal -->
-    <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true" th:if="${mensajeExito != null}">
+    <div class="modal fade" id="carritoModal" tabindex="-1" aria-labelledby="carritoModalLabel" aria-hidden="true"
+         th:if="${mensajeExito != null}">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -117,20 +123,9 @@
                            onclick="return confirm('¿Estás seguro de que querés eliminar este juego?');">
                             Eliminar
                         </a>
-            <a th:href="@{/catalogo/{id}(id=${juego.id})}" class="text-decoration-none">
-                <div class="card card-steam game-card h-100 overflow-hidden">
-                    <img th:src="${juego.imagen}" th:alt="${juego.nombre}" class="w-100 game-cover"/>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <h5 class="card-title mb-0" th:text="${juego.nombre}">Nombre</h5>
-                            <span class="price-pill"
-                                  th:text="${juego.precio == 0.0 ? 'Gratis' : '$' + juego.precio}">Precio</span>
-                        </div>
-                        <p class="small-muted mb-2" th:text="${juego.descripcion}">Descripción</p>
-                        <p class="mb-3"><span class="small-muted">Género:</span> <span th:text="${juego.genero}"></span></p>
                     </div>
                 </div>
-            </a>
+            </div>
         </div>
     </div>
 
@@ -146,7 +141,7 @@
 
 <!-- Script para mostrar el modal automáticamente si existe -->
 <script th:if="${mensajeExito != null}">
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var myModal = new bootstrap.Modal(document.getElementById('carritoModal'));
         myModal.show();
     });

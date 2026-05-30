@@ -43,8 +43,12 @@ public class JuegoController {
         }
 
         String usernameLogueado = principal.getName();
-        User usuarioCreador = userService.findByUsername(usernameLogueado);
-        juego.setCreador(usuarioCreador);
+        java.util.Optional<User> usuarioOpt = userService.findByUsername(usernameLogueado);
+        if (usuarioOpt.isEmpty()) {
+            redirectAttributes.addFlashAttribute("mensajeError", "Usuario logueado no encontrado en la base de datos.");
+            return "redirect:/catalogo";
+        }
+        juego.setCreador(usuarioOpt.get());
 
         limpiarCamposOpcionales(juego);
         juegoService.guardar(juego);
